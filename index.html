@@ -1,522 +1,921 @@
 <!DOCTYPE html>
+
 <html lang="zh-CN">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <meta name="theme-color" content="#11110f">
+
 <title>老娘肚皮站 — MINGYU ARCHIVE</title>
+
 <style>
+
 :root {
+
   --bg: #11110f;
+
   --panel: #1b1b18;
+
   --text: #eeeae2;
+
   --muted: #99958c;
+
   --line: #373630;
+
   --accent: #c6a29b;
+
 }
+
 * { box-sizing: border-box; }
+
 body {
+
   margin: 0;
+
   background: var(--bg);
+
   color: var(--text);
+
   font-family: Arial, "Microsoft YaHei", sans-serif;
+
 }
+
 button, input { font: inherit; }
+
 button { cursor: pointer; }
+
 button:focus-visible, input:focus-visible {
+
   outline: 1px solid var(--accent);
+
   outline-offset: 3px;
+
 }
+
 header {
+
   padding: 22px 5%;
+
   border-bottom: 1px solid var(--line);
+
   display: flex;
+
   justify-content: space-between;
+
   gap: 12px;
+
   color: var(--muted);
+
   font-size: 10px;
+
   letter-spacing: 2px;
+
 }
+
 main { max-width: 1600px; margin: auto; padding: 0 5%; }
+
 .hero { padding: 88px 0 58px; }
+
 .eyebrow {
+
   color: var(--accent);
+
   font-size: 10px;
+
   letter-spacing: 3px;
+
 }
+
 h1 {
+
   font: 400 clamp(48px, 9vw, 112px)/1.08 Georgia, serif;
+
   letter-spacing: -4px;
+
   margin: 22px 0;
+
 }
+
 .subtitle {
+
   color: var(--muted);
+
   font-size: 10px;
+
   letter-spacing: 4px;
+
 }
+
 .rule {
+
   display: flex;
+
   justify-content: space-between;
+
   align-items: center;
+
   border-top: 1px solid var(--line);
+
   padding: 22px 0;
+
   gap: 15px;
+
   flex-wrap: wrap;
+
 }
+
 .filters { display: flex; gap: 8px; flex-wrap: wrap; }
+
 .filters button {
+
   background: transparent;
+
   color: var(--muted);
+
   border: 1px solid var(--line);
+
   padding: 10px 14px;
+
   font-size: 11px;
+
 }
+
 .filters button.active,
+
 .filters button:hover {
+
   background: var(--text);
+
   color: var(--bg);
+
 }
+
 .search {
+
   background: var(--panel);
+
   border: 1px solid var(--line);
+
   color: var(--text);
+
   padding: 11px 13px;
+
   width: min(100%, 250px);
+
 }
+
 .status {
+
   display: flex;
+
   justify-content: space-between;
+
   flex-wrap: wrap;
+
   gap: 10px;
+
   color: var(--muted);
+
   font-size: 10px;
+
   letter-spacing: 2px;
+
   padding: 12px 0 24px;
+
 }
+
 .gallery {
+
   columns: 3;
+
   column-gap: 22px;
+
 }
+
 .card {
+
   break-inside: avoid;
+
   margin-bottom: 28px;
+
   animation: appear .35s ease both;
+
 }
+
 @keyframes appear {
+
   from { opacity: 0; transform: translateY(8px); }
+
   to { opacity: 1; transform: translateY(0); }
+
 }
+
 .photo {
+
   display: block;
+
   width: 100%;
+
   padding: 0;
+
   border: 0;
+
   overflow: hidden;
+
   background: var(--panel);
+
 }
+
 .photo img {
+
   display: block;
+
   width: 100%;
+
   height: auto;
+
   transition: transform .45s ease;
+
 }
+
 .photo:hover img { transform: scale(1.025); }
+
 .info {
+
   display: flex;
+
   justify-content: space-between;
+
   align-items: center;
+
   gap: 8px;
+
   padding-top: 12px;
+
   color: #c9c5bb;
+
   font-size: 10px;
+
   letter-spacing: 1px;
+
 }
+
 .info .name {
+
   overflow-wrap: anywhere;
+
 }
+
 .heart {
+
   flex: 0 0 auto;
+
   border: 0;
+
   background: transparent;
+
   color: var(--muted);
+
   font-size: 21px;
+
   padding: 0 4px;
+
 }
+
 .heart.saved { color: var(--accent); }
+
 .empty {
+
   display: none;
+
   text-align: center;
+
   padding: 60px 10px;
+
   color: var(--muted);
+
   line-height: 2;
+
 }
+
 .more-wrap { text-align: center; padding: 24px 0 70px; }
+
 .more {
+
   padding: 14px 28px;
+
   border: 1px solid var(--line);
+
   background: transparent;
+
   color: var(--text);
+
   font-size: 11px;
+
   letter-spacing: 2px;
+
 }
+
 .more:hover { background: var(--text); color: var(--bg); }
+
 .more:disabled { opacity: .45; cursor: default; }
+
 footer {
+
   border-top: 1px solid var(--line);
+
   padding: 26px 0 40px;
+
   color: var(--muted);
+
   font-size: 10px;
+
   line-height: 2.2;
+
   letter-spacing: 2px;
+
 }
+
 .viewer {
+
   display: none;
+
   position: fixed;
+
   inset: 0;
+
   z-index: 10;
+
   background: rgba(10,10,9,.97);
+
   padding: 30px;
+
   align-items: center;
+
   justify-content: center;
+
 }
+
 .viewer.open { display: flex; }
+
 .viewer img {
+
   max-width: 94%;
+
   max-height: 86vh;
+
   object-fit: contain;
+
 }
+
 .close {
+
   position: absolute;
+
   top: 14px;
+
   right: 24px;
+
   color: white;
+
   border: 0;
+
   background: none;
+
   font-size: 34px;
+
 }
+
 .viewer-caption {
+
   position: absolute;
+
   bottom: 12px;
+
   left: 0;
+
   right: 0;
+
   text-align: center;
+
   color: var(--muted);
+
   font-size: 11px;
+
 }
+
 @media(max-width: 850px) {
+
   .gallery { columns: 2; column-gap: 14px; }
+
   .card { margin-bottom: 20px; }
+
 }
+
 @media(max-width: 500px) {
+
   main { padding: 0 4%; }
+
   .hero { padding: 65px 0 40px; }
+
   h1 { letter-spacing: -2px; }
+
   .gallery { column-gap: 10px; }
+
   .filters button { padding: 9px 10px; }
+
   .search { width: 100%; }
+
 }
+
 </style>
+
 </head>
+
 <body>
+
 <header>
+
   <span>MINGYU ARCHIVE / VOL. 001</span>
+
   <span>PERSONAL COLLECTION</span>
+
 </header>
 
 <main>
+
   <section class="hero">
+
     <div class="eyebrow">KIM MINGYU · VISUAL STUDIES</div>
+
     <h1>老娘肚皮站</h1>
+
     <div class="subtitle">AN ARCHIVE OF SOFTNESS.</div>
+
   </section>
 
   <section class="rule">
+
     <nav class="filters" id="filters">
+
       <button class="active" data-mode="all">全部图片</button>
+
       <button data-mode="fav">我的收藏</button>
+
     </nav>
+
     <input id="search" class="search"
+
       type="search" placeholder="搜索图片编号……"
+
       aria-label="搜索图片">
+
   </section>
 
   <div class="status">
+
     <span id="count">SCANNING ARCHIVE...</span>
+
     <span id="pageStatus">MINGYU / COLLECTION</span>
+
   </div>
 
   <section class="gallery" id="gallery"></section>
+
   <div class="empty" id="empty"></div>
+
   <div class="more-wrap">
+
     <button class="more" id="more" hidden>LOAD MORE ↓</button>
+
   </div>
 
   <footer>
+
     LAONIANG BELLY ARCHIVE<br>
+
     PERSONAL VISUAL COLLECTION · EST. 2026<br>
+
     <span id="footerStatus">INITIALIZING...</span>
+
   </footer>
+
 </main>
 
 <div class="viewer" id="viewer" role="dialog"
+
   aria-modal="true" aria-label="图片预览">
+
   <button class="close" id="close" aria-label="关闭">×</button>
+
   < img id="large" alt="">
+
   <div class="viewer-caption" id="caption"></div>
+
 </div>
 
 <script>
+
 "use strict";
 
 // 你的 GitHub 仓库信息
+
 const OWNER = "kidneyprince";
+
 const REPO = "kidneyprince.github.io";
+
 const BRANCH = "main";
 
 // 同时扫描 image/ 和 images/ 两种文件夹
+
 const FOLDERS = ["image/", "images/"];
 
 // 每次先显示 36 张，点击按钮继续加载
+
 const PAGE_SIZE = 36;
 
 const gallery = document.querySelector("#gallery");
+
 const search = document.querySelector("#search");
+
 const count = document.querySelector("#count");
+
 const empty = document.querySelector("#empty");
+
 const more = document.querySelector("#more");
+
 const viewer = document.querySelector("#viewer");
+
 const large = document.querySelector("#large");
 
 let images = [];
+
 let activeMode = "all";
+
 let visibleCount = PAGE_SIZE;
+
 let generation = 0;
+
 let saved = new Set();
 
 try {
+
   saved = new Set(
+
     JSON.parse(localStorage.getItem("laoniang-favs") || "[]")
+
   );
+
 } catch {}
 
 function isImage(path) {
+
   // 接受 photo-01.jpg、photo-001.jpg 等数字编号
+
   return FOLDERS.some(folder => path.startsWith(folder))
+
     && /^photo-\d+\.jpg$/i.test(path.split("/").pop());
+
 }
 
 function imageNumber(path) {
+
   const match = path.match(/photo-(\d+)\.jpg$/i);
+
   return match ? Number(match[1]) : 0;
+
 }
 
 function rawURL(path) {
+
   return "https://raw.githubusercontent.com/"
+
     + OWNER + "/" + REPO + "/" + BRANCH + "/"
+
     + path.split("/").map(encodeURIComponent).join("/");
+
 }
 
 async function scanImages() {
+
   count.textContent = "SCANNING ARCHIVE...";
+
   empty.style.display = "none";
+
   document.querySelector("#footerStatus").textContent =
+
     "CONNECTING TO GITHUB";
 
   try {
+
     const api =
+
       `https://api.github.com/repos/${OWNER}/${REPO}/git/trees/${BRANCH}?recursive=1`;
 
     const response = await fetch(api, {
+
       headers: { Accept: "application/vnd.github+json" },
+
       cache: "no-store"
+
     });
 
     if (!response.ok) {
+
       throw new Error(
+
         response.status === 403 || response.status === 429
+
           ? "GitHub 请求次数暂时达到限制，请稍后刷新。"
+
           : "无法读取仓库文件清单（HTTP " + response.status + "）。"
+
       );
+
     }
 
     const data = await response.json();
 
     if (data.truncated) {
+
       throw new Error("仓库文件清单过大，GitHub 返回了不完整结果。");
+
     }
 
     const files = (data.tree || [])
+
       .filter(item => item.type === "blob" && isImage(item.path))
+
       .sort((a, b) => {
+
         const folderA = a.path.split("/")[0];
+
         const folderB = b.path.split("/")[0];
 
         // 统一编号排序，photo-2 排在 photo-10 前面
+
         return imageNumber(a.path) - imageNumber(b.path)
+
           || a.path.localeCompare(b.path);
+
       });
 
     images = files.map(item => ({
+
       path: item.path,
+
       src: rawURL(item.path),
+
       title: item.path.split("/").pop().replace(/\.jpg$/i, ""),
+
       key: item.path
+
     }));
 
     visibleCount = PAGE_SIZE;
+
     render();
 
     document.querySelector("#footerStatus").textContent =
+
       "ARCHIVE SYNCHRONIZED";
+
   } catch (error) {
+
     count.textContent = "ARCHIVE UNAVAILABLE";
+
     empty.style.display = "block";
+
     empty.textContent = error.message
+
       + " 请确认仓库公开、文件夹名称正确，然后重试。";
+
     document.querySelector("#footerStatus").textContent =
+
       "CONNECTION ERROR";
+
     more.hidden = true;
+
   }
+
 }
 
 function render() {
+
   const query = search.value.trim().toLowerCase();
 
   const filtered = images.filter(im => {
+
     const matchesSearch =
+
       im.title.toLowerCase().includes(query)
+
       || im.path.toLowerCase().includes(query);
 
     const matchesMode =
+
       activeMode === "all" || saved.has(im.key);
 
     return matchesSearch && matchesMode;
+
   });
 
   const visible = filtered.slice(0, visibleCount);
+
   gallery.replaceChildren();
 
   visible.forEach(im => {
+
     const card = document.createElement("article");
+
     card.className = "card";
 
     const photo = document.createElement("button");
+
     photo.className = "photo";
+
     photo.setAttribute("aria-label", "查看 " + im.title);
 
     const img = document.createElement("img");
+
     img.src = im.src;
+
     img.alt = im.title;
+
     img.loading = "lazy";
+
     img.decoding = "async";
 
     img.onerror = () => {
+
       card.dataset.error = "true";
+
       img.alt = "图片加载失败：" + im.path;
+
       img.style.minHeight = "120px";
+
     };
 
     photo.append(img);
+
     photo.addEventListener("click", () => openViewer(im));
 
     const info = document.createElement("div");
+
     info.className = "info";
 
     const name = document.createElement("span");
+
     name.className = "name";
+
     name.textContent = im.title;
 
     const heart = document.createElement("button");
+
     heart.className =
+
       "heart" + (saved.has(im.key) ? " saved" : "");
+
     heart.textContent = saved.has(im.key) ? "♥" : "♡";
+
     heart.setAttribute("aria-label", "切换收藏状态");
 
     heart.addEventListener("click", () => {
+
       if (saved.has(im.key)) saved.delete(im.key);
+
       else saved.add(im.key);
 
       try {
+
         localStorage.setItem(
+
           "laoniang-favs", JSON.stringify([...saved])
+
         );
+
       } catch {}
 
       render();
+
     });
 
     info.append(name, heart);
+
     card.append(photo, info);
+
     gallery.append(card);
+
   });
 
   count.textContent =
+
     `ARCHIVE — ${filtered.length} IMAGES`;
 
   document.querySelector("#pageStatus").textContent =
+
     `${Math.min(visibleCount, filtered.length)} / ${filtered.length}`;
 
   empty.style.display = filtered.length ? "none" : "block";
 
   if (!filtered.length) {
+
     empty.textContent = images.length
+
       ? "没有找到匹配的图片。"
+
       : "没有找到图片。请检查 image/ 或 images/ 文件夹。";
+
   }
 
   more.hidden = filtered.length <= visibleCount;
+
   more.disabled = false;
+
   more.textContent = "LOAD MORE ↓";
+
 }
 
 function openViewer(im) {
+
   large.src = im.src;
+
   large.alt = im.title;
+
   document.querySelector("#caption").textContent =
+
     im.title + " / LAONIANG ARCHIVE";
+
   viewer.classList.add("open");
+
 }
 
 function closeViewer() {
+
   viewer.classList.remove("open");
+
   large.src = "";
+
 }
 
 document.querySelector("#filters").addEventListener("click", event => {
+
   const button = event.target.closest("button[data-mode]");
+
   if (!button) return;
 
   activeMode = button.dataset.mode;
+
   visibleCount = PAGE_SIZE;
 
   document.querySelectorAll("#filters button").forEach(item => {
+
     item.classList.toggle("active", item === button);
+
   });
 
   render();
+
 });
 
 search.addEventListener("input", () => {
+
   visibleCount = PAGE_SIZE;
+
   render();
+
 });
 
 more.addEventListener("click", () => {
+
   visibleCount += PAGE_SIZE;
+
   render();
+
 });
 
 document.querySelector("#close").addEventListener("click", closeViewer);
 
 viewer.addEventListener("click", event => {
+
   if (event.target === viewer) closeViewer();
+
 });
 
 document.addEventListener("keydown", event => {
+
   if (event.key === "Escape") closeViewer();
+
 });
 
 scanImages();
+
 </script>
+
 </body>
+
 </html>
